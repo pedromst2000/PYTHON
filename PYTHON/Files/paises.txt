@@ -1,0 +1,37 @@
+Portugal; Europa
+Espanha; Europa
+França; Europa
+Grécia; Europa
+Hungria; Europa
+Irlanda; Europa
+Itália; Europa
+Letónia; Europa
+Lituânia; Europa
+Luxemburgo; Europa
+EUA; América
+Brasil; América
+Peru; América
+Colombia; América
+China; Asia	
+Japão; Asia
+Tailândia; Asia
+Malásia; Asia
+Espanha; Europa
+França; Europa
+Grécia; Europa
+Hungria; Europa
+Irlanda; Europa
+Itália; Europa
+Letónia; Europa
+Lituânia; Europa
+Luxemburgo; Europa
+EUA; América
+Brasil; América
+Peru; América
+Colombia; América
+China; Asia	
+Japão; Asia
+Tailândia; Asia
+Malásia; Asia
+Alemanha;Europa 
+Ucrania;Europa

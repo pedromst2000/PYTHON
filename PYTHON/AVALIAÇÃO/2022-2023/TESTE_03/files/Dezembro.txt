@@ -1,0 +1,12 @@
+Confeitaria Doce Alto;25;Dinheiro
+Prenda Avó;15;Dinheiro
+Eletricidade;85;Dinheiro
+TV Cabo e Internet;38;Dinheiro
+Água;18;Dinheiro
+Renda;450;Dinheiro
+Bebedouro gato;35;Credito
+Calça elCorte Inglês; 29;Credito
+Passe Transportes;25;Dinheiro
+Continente Norteshoping;28;Dinheiro
+Lidl Monte dos Burgos;32;Dinheiro
+Restaurante Picanha no Chão;15;Credito

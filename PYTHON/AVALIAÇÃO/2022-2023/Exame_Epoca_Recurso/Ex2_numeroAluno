@@ -1,0 +1,106 @@
+# Biblioteca Tkinter: UI
+from tkinter import *
+from tkinter import ttk          # treeview
+from tkinter import filedialog   # filedialog boxes
+from tkinter import messagebox   #  messagebox
+
+
+    
+
+
+
+# ---------------Main-------------------------------------------
+#----------------------------------------------------------------
+window = Tk()
+screenWidth = window.winfo_screenwidth()
+screenHeight = window.winfo_screenheight()
+appWidth = 550                             # tamanho (pixeis) da window a criar 900 / 500
+appHeight = 640 
+x = (screenWidth/2) - (appWidth/2)        # posição do canto superior esquerdo da window
+y = (screenHeight/2) - (appHeight/2)
+window.geometry("{:.0f}x{:.0f}+{:.0f}+{:.0f}" .format(appWidth, appHeight, int(x), int(y)))
+window.title('gestParque')
+
+
+frame1 = LabelFrame(window, text = "Movimentos no Parque", width=450, height=200, relief = "sunken")
+frame1.place(x=40, y=20)
+
+# RadioButtons entrada / Saida
+rd1 = Radiobutton(frame1, text = "Entrada", value = "Entrada")
+rd2 = Radiobutton(frame1, text = "Saída", value = "Saida")
+rd1.place(x=20, y=20)
+rd2.place(x=120, y=20)
+
+# Matricula
+labelMatricula = Label(frame1, text = "Matrícula")
+labelMatricula.place(x=20, y= 50)
+entryMatricula = Entry(frame1, width = 15)
+entryMatricula.place(x=90, y= 50)
+
+# Data
+labelData = Label(frame1, text = "Data")
+labelData.place(x=20, y= 80)
+entryData = Entry(frame1, width = 15)
+entryData.place(x=90, y= 80)
+
+# Hora
+labelHora = Label(frame1, text = "Hora")
+labelHora.place(x=20, y= 110)
+entryHora = Entry(frame1, width = 15)
+entryHora.place(x=90, y= 110)
+
+#Combobox Tipo Veiculo
+labelTipo = Label(frame1, text = "Tipo")
+labelTipo.place(x=20, y= 140)
+
+comboboxTipo = ttk.Combobox(frame1, width = 12)
+comboboxTipo.place(x=90, y= 140)
+
+
+# Buttton para registar o movimento
+btnRegistar = Button(frame1, text = "Registar", width=20, height=5)
+btnRegistar.place(x= 230, y= 35)  
+
+
+# Painel 2
+panel2 = PanedWindow(window, width = 450, height = 270, bd = "3", relief = "sunken")
+panel2.place(x=40, y=230)
+# TreeView para consulta de movimentos
+tree = ttk.Treeview(panel2, height = 10, selectmode = "browse", columns = ("Matricula", "Data", "Hora", "Tipo"), 
+                     show = "headings")
+ 
+tree.column("Matricula", width = 110,  anchor="c")
+tree.column("Data", width = 110,  anchor="c")          # c- center, e - direita, w- esquerda
+tree.column("Hora", width = 110,   anchor="c")
+tree.column("Tipo", width = 110,   anchor="c")
+tree.heading("Matricula", text = "Matricula")
+tree.heading("Data", text = "Data")
+tree.heading("Hora", text = "Hora")
+tree.heading("Tipo", text = "Tipo")
+tree.place(x= 15, y=10)
+
+
+# Painel 3
+panel3 = PanedWindow(window, width = 450, height = 100, bd = "3", relief = "sunken")
+panel3.place(x=40, y=530)
+
+# Tempo no Parque
+labelTempo = Label(panel3, text = "Tempo no parque")
+labelTempo.place(x=20, y= 20)
+entryTempo = Entry(panel3, width = 15)
+entryTempo.place(x=150, y= 20)
+
+# Valor a pagar 
+labelValor = Label(panel3, text = "Valor a Pagar")
+labelValor.place(x=20, y= 60)
+entryValor = Entry(panel3, width = 15)
+entryValor.place(x=150, y= 60)
+
+# Button Calcular o valor a pagar
+btnCalcular = Button(panel3, text = "Valor a pagar", width=20, height=5)
+btnCalcular.place(x= 280, y=5)  
+
+
+
+
+window.mainloop()   # event listening loop by calling the mainloop()
