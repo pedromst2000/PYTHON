@@ -79,7 +79,7 @@ btnRefresh.config(image = imgRefresh, compound = TOP)
 panel2 = PanedWindow(window, width = 550, height = 150, bd = "3", relief = "sunken" )
 panel2.place(x=20, y=300)
 
-btnVerMais = Button(panel2, width=90, height=70, text = "ver mais" ,  relief = "raised", bd=3)
+btnVerMais = Button(panel2, width=90, height=70,  relief = "raised", bd=3)
 btnVerMais.place(x=10, y=20)
 
 # adiciona a imagem 'btn+.png' ao button 'btnVerMais'
