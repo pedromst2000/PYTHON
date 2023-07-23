@@ -18,13 +18,60 @@ entryPlayer.place(x=60, y=10)
 
 # container com title posição
 container = tk.LabelFrame(Window, text="Position",
-                          width=200, height=200, relief="sunken", bd=1)
+                          width=200, height=160, relief="sunken", bd=1)
 container.place(x=50, y=50)
 
 selectedPositionGK = IntVar()
 selectedPositionDEF = IntVar()
 selectedPositionMID = IntVar()
 selectedPositionATT = IntVar()
+
+# container com title 'Overview'
+containerOverview = tk.LabelFrame(
+    Window, text="Overview", width=200, height=150, relief="sunken", bd=1)
+containerOverview.place(x=50, y=220)
+
+# label GK
+labelGK = tk.Label(containerOverview, text="GK")
+labelGK.place(x=10, y=10)
+# ENTRY GK
+entryGK = tk.Entry(containerOverview, width=8)
+entryGK.place(x=40, y=10)
+
+# label DEF
+labelDEF = tk.Label(containerOverview, text="DEF")
+labelDEF.place(x=10, y=40)
+# ENTRY DEF
+entryDEF = tk.Entry(containerOverview, width=8)
+entryDEF.place(x=40, y=40)
+
+# label MID
+labelMID = tk.Label(containerOverview, text="MID")
+labelMID.place(x=10, y=70)
+# ENTRY MID
+entryMID = tk.Entry(containerOverview, width=8)
+entryMID.place(x=40, y=70)
+
+# label ATT
+labelATT = tk.Label(containerOverview, text="ATT")
+labelATT.place(x=10, y=100)
+# ENTRY ATT
+entryATT = tk.Entry(containerOverview, width=8)
+entryATT.place(x=40, y=100)
+
+# label 'All'
+labelAll = tk.Label(containerOverview, text="All")
+labelAll.place(x=100, y=10)
+# ENTRY 'All'
+entryAll = tk.Entry(containerOverview, width=8)
+entryAll.place(x=130, y=10)
+
+# bloquear os campos
+entryGK.config(state="readonly")
+entryDEF.config(state="readonly")
+entryMID.config(state="readonly")
+entryATT.config(state="readonly")
+entryAll.config(state="readonly")
 
 
 # check button 'GK'
@@ -402,6 +449,7 @@ def addPlayer():
         entryTeam.delete(0, tk.END)
         # apresentar todos os jogadores
         allPLayersView()
+        count_players()
     elif player != "" and selectedPositionDEF.get() == 1:
         file = open("players.txt", "a", encoding="utf-8")
         # escrever no ficheiro
@@ -413,6 +461,7 @@ def addPlayer():
         entryTeam.delete(0, tk.END)
         # apresentar todos os jogadores
         allPLayersView()
+        count_players()
     elif player != "" and selectedPositionMID.get() == 1:
         file = open("players.txt", "a", encoding="utf-8")
         # escrever no ficheiro
@@ -424,6 +473,7 @@ def addPlayer():
         entryTeam.delete(0, tk.END)
         # apresentar todos os jogadores
         allPLayersView()
+        count_players()
     elif player != "" and selectedPositionATT.get() == 1:
         file = open("players.txt", "a", encoding="utf-8")
         # escrever no ficheiro
@@ -435,17 +485,151 @@ def addPlayer():
         entryTeam.delete(0, tk.END)
         # apresentar todos os jogadores
         allPLayersView()
+        count_players()
 
 # atualizar a equipa do jogador selecionado no treeview
-# def updatePlayer():
-    
+
+
+def updatePlayer():
+    # ler o a linha selecionada no treeview
+    selected = treeView.selection()[0]
+    # ler os valores da linha selecionada
+    values = treeView.item(selected, "values")  # values[1] = nome da equipa
+    # ler o nome da equipa
+    team = entryTeam.get()
+
+    # atualizar a equipa do jogador selecionado
+    if team != "":
+        # abrir o ficheiro 'players.txt' em modo de leitura
+        file = open("players.txt", "r", encoding="utf-8")
+        # ler todas as linhas do ficheiro
+        lines = file.readlines()
+        # fechar o ficheiro
+        file.close()
+        # abrir o ficheiro 'players.txt' para leitura e escrita
+        file = open("players.txt", "w+", encoding="utf-8")
+        # percorrer todas as linhas
+        for line in lines:
+            # verificar o jogador selecionado
+            if values[0] in line:
+                # atualizar a equipa
+                file.write(values[0] + ";" + team + ";" + values[2])
+            else:
+                # escrever a linha original
+                file.write(line)
+        # fechar o ficheiro
+        file.close()
+        # limpar os campos
+        entryPlayer.delete(0, tk.END)
+        entryTeam.delete(0, tk.END)
+        # apresentar todos os jogadores
+        allPLayersView()
+
+        return messagebox.showinfo("Success", f'Team of {values[0]} updated successfully to {team}')
+
+
+def deletePlayer():
+    # remover da treeview o jogador selecionado
+    selected = treeView.selection()[0]
+    values = treeView.item(selected, "values")
+
+    file = open("players.txt", "r", encoding="utf-8")
+    lines = file.readlines()
+    for line in lines:
+        if values[0] in line:
+            # buscar a linha selecionada
+            line = line
+            # remover a linha selecionada
+            replace = line.replace(line, "")
+            # abrir o ficheiro 'players.txt' para leitura e escrita
+            file = open("players.txt", "w+", encoding="utf-8")
+            # percorrer todas as linhas
+            for line in lines:
+                # verificar o jogador selecionado
+                if values[0] in line:
+                    # escrever a linha original
+                    file.write(replace)
+                else:
+                    # escrever a linha original
+                    file.write(line)
+    file.close()
+    # apresentar todos os jogadores
+    allPLayersView()
+    # atualizar o número de jogadores
+    count_players()
+
+
+def askDeletePlayer():
+    # perguntar se deseja apagar o jogador
+    if messagebox.askyesno("Delete Player", "Are you sure you want to delete this player?"):
+        deletePlayer()
+        # limpar os campos
+        entryPlayer.delete(0, tk.END)
+        entryTeam.delete(0, tk.END)
+        # apresentar todos os jogadores
+        allPLayersView()
+    else:
+        return False
+
+
+def count_players():
+    countGK = 0
+    countDEF = 0
+    countMID = 0
+    countATT = 0
+    countAll = 0
+
+    file = open("players.txt", "r", encoding="utf-8")
+    lines = file.readlines()
+    for line in lines:
+        fields = line.split(";")
+        if "GK" in fields[2]:
+            countGK += 1
+        elif "DEF" in fields[2]:
+            countDEF += 1
+        elif "MID" in fields[2]:
+            countMID += 1
+        elif "ATT" in fields[2]:
+            countATT += 1
+        countAll += 1
+    file.close()
+
+    entryGK.config(state="normal")
+    entryGK.delete(0, tk.END)
+    entryGK.insert(0, countGK)
+    entryGK.config(state="readonly")
+
+    entryDEF.config(state="normal")
+    entryDEF.delete(0, tk.END)
+    entryDEF.insert(0, countDEF)
+    entryDEF.config(state="readonly")
+
+    entryMID.config(state="normal")
+    entryMID.delete(0, tk.END)
+    entryMID.insert(0, countMID)
+    entryMID.config(state="readonly")
+
+    entryATT.config(state="normal")
+    entryATT.delete(0, tk.END)
+    entryATT.insert(0, countATT)
+    entryATT.config(state="readonly")
+
+    entryAll.config(state="normal")
+    entryAll.delete(0, tk.END)
+    entryAll.insert(0, countAll)
+    entryAll.config(state="readonly")
+
 
 buttonSearch.config(command=searchPlayer)
 # associar o botão 'Reiniciar' à função 'resetView'
 buttonReset.config(command=resetView)
 # associar o botão 'Adicionar' à função 'addPlayer'
 buttonAdd.config(command=addPlayer)
+# associar o botão 'Editar' à função 'updatePlayer'
+buttonEdit.config(command=updatePlayer)
+# associar o botão 'Apagar' à função 'deletePlayer'
+buttonDelete.config(command=askDeletePlayer)
 
-
+count_players()
 allPLayersView()
 Window.mainloop()
