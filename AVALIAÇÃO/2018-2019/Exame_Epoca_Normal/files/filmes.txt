@@ -1,0 +1,14 @@
+A rapariga que roubava Livros;Thriller;10
+O Pacto;Drama;120
+Morte no Nilo;Drama;87
+Os Visitantes;Thriller;33
+Mistério em Paris;Comédia;146
+AI-Inteligência Artificial;Thriller;55
+Alien vs Predador;Thriller;75
+Estranho Mundo;Animação;23
+O Rei Leão;Animação;312
+Gato das Botas;Animação;98
+Agente Infiltrado;Acção;67
+Missão Impossível 4 - Protocolo Fantasma;Acção;768
+O convite;Terror;91
+O Exorcista;Terror;978

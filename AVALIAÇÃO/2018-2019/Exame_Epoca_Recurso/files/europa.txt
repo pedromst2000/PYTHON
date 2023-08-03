@@ -1,0 +1,10 @@
+Lisboa;Portugal;Espanha;Franca;Reino Unido;Portugal
+Madrid;Alemanha;Espanha;Franca;Reino Unido;Espanha
+Paris;França;Hungria;Itália;Portugal;França
+Roma;Itália;Espanha;Franca;Reino Unido;Itália
+Londres;Reino Unido;Espanha;Franca;Portugal;Reino Unido
+Budapeste;Hungria;Espanha;Franca;Reino Unido;Hungria
+berlim;Alemanha;Espanha;Franca;Reino Unido;Alemanha
+Viena;Áustria;Espanha;Franca;Reino Unido;Áustria
+Tirana;Albânia;Espanha;Franca;Reino Unido;Albânia
+kiev;Ucrânia;Espanha;Franca;Reino Unido;Ucrânia

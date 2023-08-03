@@ -1,9 +1,0 @@
-Maria Costa;Docente
-Carlos Manuel Teixeira;Estudante
-Maria Francisca Cardoso;Estudante
-Manuel Jorge Costa;Docente
-Ricardo Manuel Pinto;Docente
-Vania Carsoso Pereira;Externo
-Madalena Maria Costa;Externo
-Isabel Maria Fonseca;Externo
-Pedro;Estudante

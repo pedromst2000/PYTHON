@@ -1,0 +1,19 @@
+Diogo Costa;Porto;GK
+António Silva;Benfica;DEF
+Rubén Dias;Manchester City;DEF
+Pepe;Porto;DEF
+Raphaël Guerreiro;Bayern Munchen;DEF
+João Cancelo;Manchester City;DEF
+Diogo Dalot;Manchester United;DEF
+Vitinha;PSG;MID
+Renato Sanches;PSG;MID
+Bernardo Silva;Manchester City;MID
+Otávio;Porto;MID
+João Mário;Benfica;MID
+Rafael Leão;AC Milan;ATT
+André Silva;Eintracht Frankfurt;ATT
+João Félix;Atlético Madrid;ATT
+Rafa Silva;Benfica;ATT
+Pedro Gonçalves;Sporting;ATT
+Cristiano Ronaldo;Al Nassr;ATT
+Pedro Teixeira;Benfica;ATT

@@ -1,0 +1,10 @@
+Pequim;China;Taiwan;Japão;Coreia do Sul;China
+Taipei;Taiwan;China;Japão;Coreia do Sul;Taiwan
+Seul;Myammar;China;Japão;Coreia do Sul;Coreia do Sul
+Tóquio;India;Japão;China;Coreia do Sul;Japão
+Manila;Filipinas;China;Japão;Coreia do Sul;Filipinas
+Jacarta;Tailandia;China;Japão;Coreia do Sul;Indonésia
+Nova Deli;Coreia do Norte;India;Myammar;Bangladesh;India
+Daca;India;Bangladesh;Myammar;Afeganistão;Bangladesh
+Islamabad;Uzbequistão;Afeganistão;Myammar;India;Paquistão
+Cabul;Israel;Síria;Afeganistão;Paquistão;Afeganistão

@@ -1,0 +1,10 @@
+Eletricidade;85;Dinheiro
+TV Cabo e Internet;38;Dinheiro
+Água;18;Dinheiro
+Renda;450;Dinheiro
+Casaco Massimo;65;Credito
+Camisa Zara; 29;Credito
+Passe Transportes;25;Dinheiro
+Pingo Doce Vila do Conde;14;Dinheiro
+Continente Matosinhos;19;Dinheiro
+Brincos;17;Credito

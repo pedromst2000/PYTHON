@@ -1,0 +1,5 @@
+lisbon;spain;portugal;germany;austria;portugal
+paris;france;portugal;belgium;croatia;france
+rome;italy;france;belgium;germany;italy
+viena;greece;italy;portugal;austria;austria
+madrid;spain;portugal;belgium;france;spain
