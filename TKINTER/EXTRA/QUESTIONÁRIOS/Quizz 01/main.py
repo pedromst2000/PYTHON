@@ -72,6 +72,7 @@ buttonStart = tk.Button(containerQuizz, text="Start",
                         width=15, height=5, relief="raised", borderwidth=4)
 buttonStart.place(x=400, y=150)
 
+# ------------------ Functions ----------------------------------------------------------------------
 
 def Quizz_view():
     global rightAwnsers
@@ -143,7 +144,7 @@ def Quizz(i=0):
 
         print(f'{selected.get()} - {line[5]}')
 
-        if selected.get() == line[5]:
+        if selected.get() == line[5].strip():
             rightAwnsers += 1
             score += 10
             entryRight.delete(0, tk.END)
