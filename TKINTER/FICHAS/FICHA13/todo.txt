@@ -1,0 +1,1 @@
+() get the last user created to be displayed on the header when created an account

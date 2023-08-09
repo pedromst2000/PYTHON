@@ -2,13 +2,18 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 # from PIL import ImageTk, Image
 
-from consultarProvas import *
-from gerirProvas import *
-from users import *
+from models.consultarProvas import *
+from models.gerirProvas import *
+from models.users import *
 
 Window = tk.Tk()
 Window.title("my Running App")
 Window.geometry("1200x600")
+
+# logical variables
+userIsLogged = False
+loggedUser = ""
+registeredUser = ""
 
 containerMenuBackground = tk.Frame(Window, bg="#2c2c2c", width=220, height=600)
 containerMenuBackground.grid(row=0, column=0, sticky="nsew")
@@ -69,6 +74,7 @@ imgMainImage = tk.PhotoImage(file="images/mainImage.png")
 canvasHome.create_image(490, 230, image=imgMainImage)
 
 
+# --------------------------------------------------------------------AUTHENTICATION VIEW --------------------------------------------------------------------
 def loginView():
         containerLogin = tk.Frame(Window, bg="#2c2c2c", width=780, height=300)
         containerLogin.place(x=310, y=150)
@@ -96,18 +102,123 @@ def loginView():
         btnLogin = tk.Button(containerLogin, text="Login", width=15, height=2, font=("Arial", 12))
         btnLogin.place(x=320, y=200)
 
-        # get the username and the password from the entryUsername and the entryPassword
-        username = entryUsername.get()
-        password = entryPassword.get()
-
-        checkLogin(username, password)
+        btnLogin.config(command=lambda: checkLoginView(entryUsername, entryPassword, containerLogin))
 
 
+def RegisterView():
+        containerRegister = tk.Frame(Window, bg="#2c2c2c", width=780, height=350)
+        containerRegister.place(x=310, y=150)
 
-def checkLogin(username, password):
-        print(username, password)
+        # destroy the containerRegister when  clicked on the canvas
+        canvasHome.bind("<Button-1>", lambda event: containerRegister.destroy())
+
+        labelUsername = tk.Label(containerRegister, text="Username", fg="white", font=("Arial", 12))
+        labelUsername.place(x=220, y=90)
+
+        # remove the background of the label
+        labelUsername.config(bg="#2c2c2c")
+
+        entryUsername = tk.Entry(containerRegister, width=20, font=("Arial", 12))
+        entryUsername.place(x=320, y=90)
+
+        labelPassword = tk.Label(containerRegister, text="Password", fg="white", font=("Arial", 12))
+        labelPassword.place(x=220, y=140)
+
+        labelPassword.config(bg="#2c2c2c")
+
+        entryPassword = tk.Entry(containerRegister, width=20, font=("Arial", 12))
+        entryPassword.place(x=320, y=140)
+
+        labelConfirmPassword = tk.Label(containerRegister, text="Confirmar Password", fg="white", font=("Arial", 12))
+        labelConfirmPassword.place(x=220, y=190)
+
+        labelConfirmPassword.config(bg="#2c2c2c")
+
+        entryConfirmPassword = tk.Entry(containerRegister, width=20, font=("Arial", 12))
+        entryConfirmPassword.place(x=390, y=190)
+        
+        btnRegister = tk.Button(containerRegister, text="Registar", width=15, height=2, font=("Arial", 12))
+        btnRegister.place(x=320, y=250)
+
+        btnRegister.config(command=lambda: checkRegisterView(entryUsername, entryPassword, entryConfirmPassword, containerRegister))
 
 
+def checkLoginView(username, password, containerLogin):
+ 
+  global userIsLogged
+  global loggedUser
+
+  if username.get() == "" and password.get() == "":
+        messagebox.showerror("Login", "Preencha todos os campos!")
+        userIsLogged = False
+
+  if username.get() == "" and password.get() != "":
+        messagebox.showerror("Login", "Preencha o campo username!")
+        userIsLogged = False 
+
+  if username.get() != "" and password.get() == "":
+        messagebox.showerror("Login", "Preencha o campo password!")
+        userIsLogged = False
+
+  if username.get() != "" and password.get() != "":
+       if login(username.get(), password.get()):
+           messagebox.showinfo("Login", "Login efetuado com sucesso!")
+           userIsLogged = True
+           loggedUser = username.get()
+           containerLogin.destroy()
+           headerView()
+       else:
+           messagebox.showerror("Login", "Username ou password incorretos!")
+           userIsLogged = False      
+
+
+def checkRegisterView(username, password, confirmPassword, containerRegister):
+        global userIsLogged
+        global loggedUser
+
+        if username.get() == "" and password.get() == "" and confirmPassword.get() == "":
+                messagebox.showerror("Registar", "Preencha todos os campos!")
+
+        if username.get() != "" and password.get() == "" and confirmPassword.get() == "":
+                messagebox.showerror("Registar", "Preencha o campo password!")
+
+        if username.get() != "" and password.get() != "" and confirmPassword.get() == "":
+                messagebox.showerror("Registar", "Preencha o campo confirmar password!")
+  
+        if username.get() == "" and password.get() != "" and confirmPassword.get() != "":
+                messagebox.showerror("Registar", "Preencha o campo username!")
+
+        if username.get() == "" and confirmPassword.get() == "" and password.get() != "":
+                messagebox.showerror("Registar", "Preencha o campo username!")
+
+        elif username.get() != "" and password.get() != "" and confirmPassword.get() != "":
+                if password.get() != confirmPassword.get():
+                        messagebox.showerror("Registar", "As passwords não coincidem!")
+                else:
+                        if register(username.get(), password.get()):
+                                messagebox.showinfo("Registar", "Registo efetuado com sucesso!")
+                                containerRegister.destroy()
+                                userIsLogged = True
+                                loggedUser = username.get()
+                                headerView()
+                        else:
+                                messagebox.showerror("Registar", "O username já existe!")
+
+def headerView():
+  global userIsLogged
+  global loggedUser
+
+  if userIsLogged == True:
+       btnLogin.destroy()
+       btnCreateAccount.destroy()
+       labelWelcome = tk.Label(Window, text=f"Bem-vindo(a) {loggedUser} !", font=("Arial", 14), fg="blue")
+       labelWelcome.place(x=260, y=40)
+       btnLogOut = tk.Button(Window, text="Terminar Sessão", width=15, height=2, font=("Arial", 12))
+       btnLogOut.place(x=1030, y=20)
+
+
+# ------------------------------------------------------------------------------------------------------------------------------------------
 
 btnLogin.config(command=loginView)
+btnCreateAccount.config(command=RegisterView)
 Window.mainloop()
