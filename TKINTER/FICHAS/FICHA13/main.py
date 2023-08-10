@@ -12,8 +12,7 @@ Window.geometry("1200x600")
 
 # logical variables
 userIsLogged = False
-loggedUser = ""
-registeredUser = ""
+userLogged = ""
 
 containerMenuBackground = tk.Frame(Window, bg="#2c2c2c", width=220, height=600)
 containerMenuBackground.grid(row=0, column=0, sticky="nsew")
@@ -144,9 +143,9 @@ def RegisterView():
 
 
 def checkLoginView(username, password, containerLogin):
- 
+
   global userIsLogged
-  global loggedUser
+  global userLogged
 
   if username.get() == "" and password.get() == "":
         messagebox.showerror("Login", "Preencha todos os campos!")
@@ -164,7 +163,7 @@ def checkLoginView(username, password, containerLogin):
        if login(username.get(), password.get()):
            messagebox.showinfo("Login", "Login efetuado com sucesso!")
            userIsLogged = True
-           loggedUser = username.get()
+           userLogged = username.get()
            containerLogin.destroy()
            headerView()
        else:
@@ -174,7 +173,9 @@ def checkLoginView(username, password, containerLogin):
 
 def checkRegisterView(username, password, confirmPassword, containerRegister):
         global userIsLogged
-        global loggedUser
+        global userLogged
+
+        userLogged = username.get()
 
         if username.get() == "" and password.get() == "" and confirmPassword.get() == "":
                 messagebox.showerror("Registar", "Preencha todos os campos!")
@@ -191,34 +192,50 @@ def checkRegisterView(username, password, confirmPassword, containerRegister):
         if username.get() == "" and confirmPassword.get() == "" and password.get() != "":
                 messagebox.showerror("Registar", "Preencha o campo username!")
 
-        elif username.get() != "" and password.get() != "" and confirmPassword.get() != "":
+        if username.get() != "" and password.get() != "" and confirmPassword.get() != "":
                 if password.get() != confirmPassword.get():
                         messagebox.showerror("Registar", "As passwords não coincidem!")
                 else:
                         if register(username.get(), password.get()):
-                                messagebox.showinfo("Registar", "Registo efetuado com sucesso!")
+                                messagebox.showinfo("Registar", f"Registo efetuado com sucesso! Bem-vindo(a) {username.get()}!")
                                 containerRegister.destroy()
                                 userIsLogged = True
-                                loggedUser = username.get()
+                                userLogged
                                 headerView()
                         else:
                                 messagebox.showerror("Registar", "O username já existe!")
 
 def headerView():
   global userIsLogged
-  global loggedUser
+  global userLogged
 
   if userIsLogged == True:
-       btnLogin.destroy()
-       btnCreateAccount.destroy()
-       labelWelcome = tk.Label(Window, text=f"Bem-vindo(a) {loggedUser} !", font=("Arial", 14), fg="blue")
+  # hidden the login and register buttons~
+       btnLogin.place_forget()
+       btnCreateAccount.place_forget()
+       labelWelcome = tk.Label(Window, text=f"Bem-vindo(a) {userLogged} !", font=("Arial", 14), fg="blue")
        labelWelcome.place(x=260, y=40)
        btnLogOut = tk.Button(Window, text="Terminar Sessão", width=15, height=2, font=("Arial", 12))
        btnLogOut.place(x=1030, y=20)
+       btnLogOut.config(command=lambda: logout(btnLogOut, labelWelcome))
 
 
+def logout(btnLogOut, labelWelcome):
+        global userIsLogged
+        global userLogged
+        print("Antes de terminar sessão:")
+        print(f'{userLogged} terminou sessão!')
+        print(f'User is logged: {userIsLogged}')
+        userIsLogged = False
+        userLogged = ""
+        print("Depois de terminar sessão:")
+        print(f'User is logged: {userIsLogged}')
+        print(f'User logged: {userLogged.replace(" ", "no user logged")}')
+        btnLogOut.place_forget()
+        labelWelcome.place_forget()
+        btnLogin.place(x=860, y=20)
+        btnCreateAccount.place(x=1030, y=20)
 # ------------------------------------------------------------------------------------------------------------------------------------------
-
 btnLogin.config(command=loginView)
 btnCreateAccount.config(command=RegisterView)
 Window.mainloop()

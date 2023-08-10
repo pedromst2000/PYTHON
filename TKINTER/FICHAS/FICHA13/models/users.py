@@ -17,11 +17,11 @@ def register(username, password):
     file = open("files/utilizadores.txt", "r", encoding="utf-8")
 
     for line in file:
-        # check if the username already exists
-        if username in line:
+        line = line.strip()
+        user = line.split(";")
+
+        if user[0] == username:
             return False
-        else:
-            # if the username doesn't exist, create a new user+
-            User(username, password).addUser()
-            return True
         
+    User(username, password).addUser()      
+    return True  
