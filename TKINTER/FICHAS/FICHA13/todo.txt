@@ -1,2 +1,2 @@
 (x) * chars on the password - counting special chars aswell on the * 
-() display the marathones of the loggedUser
+(x) display the marathones of the loggedUser

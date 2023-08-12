@@ -1,13 +1,10 @@
-from Classes.prova import prova
 
-# display the races of the logged in user
-def displayRaces(username):
-
-    file = open("files/provas.txt", "r", encoding="utf-8")
+def filterRunner(username):
+    file = open("provas.txt", "r", encoding="utf-8")
 
     lines = file.readlines()
 
-    userRaces = []
+    userRunners = []
 
     for line in lines:
         if username in line:
@@ -19,20 +16,15 @@ def displayRaces(username):
                         line = line.replace(username, "")
                         # remove the ; from the end of the line
                         line = line[:-1]
-                        userRaces.append({"name": line.split(";")[0], "date": line.split(
+                        # add to the list as dict item with id (the number of the line)
+                        userRunners.append({"id": len(userRunners) + 1, "name": line.split(";")[0], "date": line.split(
                             ";")[1], "local": line.split(";")[2], "distance": line.split(";")[3]})
+
                         break
+
+    print(userRunners)
+
     file.close()
 
-    return userRaces
 
-
-def addProof(proof, date, local, distance):
-    prova(proof, date, local, distance).addProva()
-
-    return True
-
-def deleteProof(proof, date, local, distance):
-    prova(proof, date, local, distance).deleteProva()
-
-    return True
+filterRunner("pedromst2000")
