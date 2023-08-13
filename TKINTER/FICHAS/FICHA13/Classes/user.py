@@ -1,4 +1,9 @@
 class User:
+
+    # attributes
+    username = ""
+    password = ""
+
     #constructor
     def __init__(self, username, password):
         self.username = username

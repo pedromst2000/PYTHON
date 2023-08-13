@@ -1,2 +1,4 @@
 (x) * chars on the password - counting special chars aswell on the * 
 (x) display the marathones of the loggedUser
+() handle adding a proof 
+() handle removing a proof

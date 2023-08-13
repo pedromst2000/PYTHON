@@ -17,6 +17,7 @@ userLogged = ""
 passwordIsVisible = False
 selectedRace = StringVar()
 
+
 # --------------------------------------------------------------------HOME VIEW --------------------------------------------------------------------
 
 # remove the maximize button
@@ -248,9 +249,9 @@ def checkRegisterView(username, password, confirmPassword, containerRegister):
             if register(username.get(), password.get()):
                 messagebox.showinfo(
                     "Registar", f"Registo efetuado com sucesso! Bem-vindo(a) {username.get()}!")
-                containerRegister.destroy()
                 userIsLogged = True
                 userLogged
+                containerRegister.destroy()
                 headerView()
             else:
                 messagebox.showerror("Registar", "O username já existe!")
@@ -291,6 +292,8 @@ def headerView():
         btnLogOut.place(x=1030, y=20)
         btnLogOut.config(command=lambda: logout())
 # ----------------------------------------------------------------------MANAGE RACES VIEW-------------------------------------------------------
+
+
 def manageRacesOption():
     global userIsLogged
     global userLogged
@@ -307,6 +310,7 @@ def manageRacesView():
 
     global selectedRace
     global userLogged
+    global addImage
 
     selectedRace.set("Caminhada")
 
@@ -344,25 +348,57 @@ def manageRacesView():
         containerRacesView, text="Caminhada", variable=selectedRace, value="Caminhada")
     radioTrail.place(x=120, y=150)
 
-    radio5K = tk.Radiobutton( containerRacesView, text="5K", variable=selectedRace, value="5K")
+    radio5K = tk.Radiobutton(
+        containerRacesView, text="5K", variable=selectedRace, value="5K")
     radio5K.place(x=120, y=180)
 
-    radio10K = tk.Radiobutton( containerRacesView, text="10K", variable=selectedRace, value="10K")
+    radio10K = tk.Radiobutton(
+        containerRacesView, text="10K", variable=selectedRace, value="10K")
     radio10K.place(x=120, y=210)
 
-    radio21K = tk.Radiobutton( containerRacesView, text="21K", variable=selectedRace, value="21K")
+    radio21K = tk.Radiobutton(
+        containerRacesView, text="21K", variable=selectedRace, value="21K")
     radio21K.place(x=120, y=240)
 
     listUserRaces = tk.Listbox(containerRacesView, width=70, height=15)
-    listUserRaces.place(x=520, y=30)
+    listUserRaces.place(x=520, y=10)
 
     # insert the races from the logged user in the listbox
-    loggedUserRaces = displayRaces(userLogged)    
+    loggedUserRaces = displayRaces(userLogged)
 
-    # iterate in the array and insert the data into te listbox in the format : prova  data  local  tipo
-    for i in range(len(loggedUserRaces)):
-        listUserRaces.insert(i, loggedUserRaces[i])
-    
+    # iterate the dictionary
+    for i in loggedUserRaces:
+        listUserRaces.insert(
+            tk.END, f'{i["name"]}  {i["date"]}  {i["local"]}  {i["distance"]}')
+
+    # increase the font size of the listbox
+    listUserRaces.config(font=("Arial", 11))
+
+    # add scrollbar horizontal and vertical
+    scrollbar = tk.Scrollbar(containerRacesView, orient="vertical")
+    scrollbar.config(command=listUserRaces.yview)
+
+    scrollbar.place(x=960, y=10, height=300)
+
+    # add scrollbar horizontal and vertical
+    scrollbar = tk.Scrollbar(containerRacesView, orient="horizontal")
+    scrollbar.config(command=listUserRaces.xview)
+
+    scrollbar.place(x=520, y=300, width=440)
+
+    addImage = tk.PhotoImage(file="images/adicionar.png")
+    addImage.subsample(1, 1)
+
+    btnAddRace = tk.Button(containerRacesView, width=90, height=70,
+                           image=addImage, compound="left", bd=0, cursor="hand2")
+    btnAddRace.place(x=650, y=350)
+
+    removeImage = tk.PhotoImage(file="images/remover.png")
+    removeImage.zoom(2, 2)
+
+    btnRemoveRace = tk.Button(containerRacesView, width=90, height=70,
+                              image=removeImage, compound="center", bd=1, cursor="hand2")
+    btnRemoveRace.place(x=750, y=350)
 
 # -------------------------------------------------------------------CONSULT RACES VIEW-------------------------------------------------------
 
