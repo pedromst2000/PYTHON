@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, StringVar, IntVar
-import datetime
 from tkcalendar import DateEntry
 
 from models.consultarProvas import *
@@ -16,7 +15,7 @@ userIsLogged = False
 userLogged = ""
 passwordIsVisible = False
 selectedRace = StringVar()
-
+deletedImage = tk.PhotoImage(file="images/remover.png")
 
 # --------------------------------------------------------------------HOME VIEW --------------------------------------------------------------------
 
@@ -311,6 +310,7 @@ def manageRacesView():
     global selectedRace
     global userLogged
     global addImage
+    global deletedImage
 
     selectedRace.set("Caminhada")
 
@@ -393,12 +393,67 @@ def manageRacesView():
                            image=addImage, compound="left", bd=0, cursor="hand2")
     btnAddRace.place(x=650, y=350)
 
-    removeImage = tk.PhotoImage(file="images/remover.png")
-    removeImage.zoom(2, 2)
+    btnRemoveRace = tk.Button(containerRacesView,  width=90,
+                              height=70, image=deletedImage, bd=0, cursor="hand2")
+    btnRemoveRace.place(x=740, y=350)
 
-    btnRemoveRace = tk.Button(containerRacesView, width=90, height=70,
-                              image=removeImage, compound="center", bd=1, cursor="hand2")
-    btnRemoveRace.place(x=750, y=350)
+    btnAddRace.config(command=lambda: addProofView(
+        entryProof.get(), entryDate.get_date(), entryLocal.get(), selectedRace.get(), userLogged, listUserRaces))
+
+    btnRemoveRace.config(command=lambda: deleteProofView(
+        # got the index of the selected line
+        listUserRaces.curselection(), listUserRaces
+    ))
+
+
+def addProofView(proof, date, local, distance, creator, listProof):
+
+    if proof == "" and local == "":
+        return messagebox.showerror("Adicionar Prova", "Tem de preencher todos os campos!")
+
+    if proof != "" and local == "":
+        return messagebox.showerror("Adicionar Prova", "Tem de preencher o campo Local!")
+
+    if proof == "" and local != "":
+        return messagebox.showerror("Adicionar Prova", "Tem de preencher o campo Prova!")
+
+    else:
+        messagebox.showinfo("Adicionar Prova", "Prova adicionada com sucesso!")
+        addProof(proof, date, local, distance, creator)
+        listProof.insert(tk.END, f'{proof}  {date}  {local}  {distance}')
+
+
+def deleteProofView(selectedLine, listProof):
+
+    if listProof.curselection() == ():
+        return messagebox.showerror("Remover Prova", "Tem de selecionar uma prova!")
+
+    else:
+        checkDelete = messagebox.askyesno(
+            "Remover Prova", "Tem a certeza que pretende remover a prova selecionada?")
+
+        if checkDelete == True:
+            messagebox.showinfo("Remover Prova", "Prova removida com sucesso!")
+
+            # get the index of the selected line
+            index = listProof.curselection()[0]
+
+            # get the text of the selected line
+            text = listProof.get(index)
+
+            # split the text
+            text = text.split()
+
+            # get the name of the proof
+            proof = text[0]
+
+            # delete the proof
+            deleteProof(proof)
+
+            # delete the selected line
+            listProof.delete(index)
+
+        return False
 
 # -------------------------------------------------------------------CONSULT RACES VIEW-------------------------------------------------------
 

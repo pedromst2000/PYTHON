@@ -1,6 +1,8 @@
 from Classes.prova import prova
 
 # display the races of the logged in user
+
+
 def displayRaces(username):
 
     file = open("files/provas.txt", "r", encoding="utf-8")
@@ -27,12 +29,26 @@ def displayRaces(username):
     return userRaces
 
 
-def addProof(proof, date, local, distance):
-    prova(proof, date, local, distance).addProva()
+def addProof(proof, date, local, distance, creator):
+
+    prova(proof, date, local, distance, creator).addProva()
 
     return True
 
-def deleteProof(proof, date, local, distance):
-    prova(proof, date, local, distance).deleteProva()
+def deleteProof(selectedProof):
 
-    return True
+    file = open("files/provas.txt", "r", encoding="utf-8")
+
+    lines = file.readlines()
+
+    file.close()
+
+    file = open("files/provas.txt", "w+", encoding="utf-8")
+
+    for line in lines:
+        # compare the selected proof with the line in the file and if they match remove the selected line by replacing it with nothing
+        if selectedProof in line:
+            line = ""
+        file.write(line)
+
+    file.close()
