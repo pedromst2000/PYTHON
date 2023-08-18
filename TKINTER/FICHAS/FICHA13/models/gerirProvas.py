@@ -52,3 +52,20 @@ def deleteProof(selectedProof):
         file.write(line)
 
     file.close()
+
+    return True
+
+
+def isAlreadyAdded(proof):
+
+    file = open("files/provas.txt", "r", encoding="utf-8")
+
+    lines = file.readlines()
+
+    file.close()
+
+    for line in lines:
+        if proof in line:
+            return True
+
+    return False

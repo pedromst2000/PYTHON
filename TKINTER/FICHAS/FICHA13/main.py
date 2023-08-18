@@ -401,8 +401,7 @@ def manageRacesView():
         entryProof.get(), entryDate.get_date(), entryLocal.get(), selectedRace.get(), userLogged, listUserRaces))
 
     btnRemoveRace.config(command=lambda: deleteProofView(
-        # got the index of the selected line
-        listUserRaces.curselection(), listUserRaces
+        listUserRaces
     ))
 
 
@@ -417,13 +416,18 @@ def addProofView(proof, date, local, distance, creator, listProof):
     if proof == "" and local != "":
         return messagebox.showerror("Adicionar Prova", "Tem de preencher o campo Prova!")
 
-    else:
-        messagebox.showinfo("Adicionar Prova", "Prova adicionada com sucesso!")
-        addProof(proof, date, local, distance, creator)
-        listProof.insert(tk.END, f'{proof}  {date}  {local}  {distance}')
+    if proof != "" and local != "":
+        if isAlreadyAdded(proof):
+            return messagebox.showerror("Adicionar Prova", "A prova já existe!")
+
+        else:
+            messagebox.showinfo("Adicionar Prova",
+                                "Prova adicionada com sucesso!")
+            addProof(proof, date, local, distance, creator)
+            listProof.insert(tk.END, f'{proof}  {date}  {local}  {distance}')
 
 
-def deleteProofView(selectedLine, listProof):
+def deleteProofView(listProof):
 
     if listProof.curselection() == ():
         return messagebox.showerror("Remover Prova", "Tem de selecionar uma prova!")
@@ -438,20 +442,11 @@ def deleteProofView(selectedLine, listProof):
             # get the index of the selected line
             index = listProof.curselection()[0]
 
-            # get the text of the selected line
-            text = listProof.get(index)
+            # get the proof name
+            proofName = listProof.get(index).split("  ")[0]
 
-            # split the text
-            text = text.split()
-
-            # get the name of the proof
-            proof = text[0]
-
-            # delete the proof
-            deleteProof(proof)
-
-            # delete the selected line
             listProof.delete(index)
+            deleteProof(proofName)
 
         return False
 

@@ -1,0 +1,7 @@
+S.Silvestre;2013-01-03;Porto;10K
+Corrida dos Reis;2023-01-13;Póvoa de Varzim
+Corrida EDP;2023-02-08;Póvoa de Varzim
+Prova de Paranhos;2023-02-21;Porto
+Prova Prozis S.Tirso;2023-04-10;Porto
+Corrida EDP;2023-10-08;Póvoa de Varzim
+Mini Maratona de Aveiro;2023-05-29;Aveiro

@@ -3,5 +3,5 @@ Corrida dos Reis;2023-01-13;Póvoa de Varzim;10K;admin
 Corrida EDP;2023-02-08;Póvoa de Varzim;10K;admin
 Prova de Paranhos;2023-02-21;Porto;10K;admin
 Prova Prozis S.Tirso;2023-04-10;Porto;5K;pedromst2000
-Corrida EDP;2023-10-08;Póvoa de Varzim;21K;admin
+Corrida Galp;2023-10-08;Póvoa de Varzim;21K;admin
 Mini Maratona de Aveiro;2023-05-29;Aveiro;21K;pedromst2000

@@ -532,6 +532,7 @@ def deletePlayer():
     # remover da treeview o jogador selecionado
     selected = treeView.selection()[0]
     values = treeView.item(selected, "values")
+    print(values)
 
     file = open("players.txt", "r", encoding="utf-8")
     lines = file.readlines()
