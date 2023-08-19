@@ -46,7 +46,30 @@ def deleteData():
 
     file.close()
 
+    file = open("provas.txt", "r+", encoding="utf-8")
+    
+    for line in file:
+        if line.isspace():
+            file.write(line)
+    file.close()
+
+
+def deleteEmptyLines():
+    file = open("provas.txt", "r", encoding="utf-8")
+    lines = file.readlines()
+
+    file.close()
+
+    file = open("provas.txt", "w+", encoding="utf-8")
+
+    for line in lines:
+        if line != "\n":
+            file.write(line)
+
+    file.close()
+
 
 btnDelete.config(command=deleteData)
 readData()
+deleteEmptyLines()
 Window.mainloop()

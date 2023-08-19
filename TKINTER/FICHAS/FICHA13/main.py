@@ -15,7 +15,12 @@ userIsLogged = False
 userLogged = ""
 passwordIsVisible = False
 selectedRace = StringVar()
+# for solving the bug of the image not showing
 deletedImage = tk.PhotoImage(file="images/remover.png")
+
+# show all proofs
+
+
 
 # --------------------------------------------------------------------HOME VIEW --------------------------------------------------------------------
 

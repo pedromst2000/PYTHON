@@ -1,3 +1,6 @@
+import os
+
+
 class prova:
 
     # attributes
@@ -20,6 +23,15 @@ class prova:
     def addProva(self):
         file = open("files/provas.txt", "a", encoding="utf-8")
 
-        file.write(
-            f'\n{self.Prova};{self.Data};{self.Local};{self.Distance};{self.Creator}')
+        # if the last line of the file is empty, don't add a new line
+        if os.stat("files/provas.txt").st_size != 0:
+            file.write("\n")
+
+            file.write(self.Creator + self.Prova + ";" + self.Data +
+                       ";" + self.Local + ";" + self.Distance + ";")
+
+        else:
+            file.write(
+                f'\n{self.Prova};{self.Data};{self.Local};{self.Distance};{self.Creator}')
+
         file.close()
