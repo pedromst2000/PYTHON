@@ -17,10 +17,17 @@ passwordIsVisible = False
 selectedRace = StringVar()
 # for solving the bug of the image not showing
 deletedImage = tk.PhotoImage(file="images/remover.png")
+searchImage = tk.PhotoImage(file="images/pesquisar.png")
+ascImage = tk.PhotoImage(file="images/asc.png")
+descImage = tk.PhotoImage(file="images/desc.png")
 
-# show all proofs
-
-
+# all the possibile filters while checking the proofs
+allProofs = IntVar()
+myProofs = IntVar()
+fiveKproofs = IntVar()
+tenKproofs = IntVar()
+twentyOneKproofs = IntVar()
+trailProofs = IntVar()
 
 # --------------------------------------------------------------------HOME VIEW --------------------------------------------------------------------
 
@@ -469,9 +476,105 @@ def consultRacesOption():
 
 def consultRacesView():
 
+    global allProofs
+    global myProofs
+    global fiveKproofs
+    global tenKproofs
+    global twentyOneKproofs
+    global trailProofs
+    global searchImage
+    global ascImage
+    global descImage
+
+    countProofs = 0
+    allProofs.set(1)
+
     containerRacesView = tk.Frame(Window, width=980, height=600)
     containerRacesView.place(x=220, y=100)
 
+    allProofOpt = tk.Checkbutton(
+        containerRacesView, text="Todas as provas", variable=allProofs, onvalue=1, offvalue=0)
+    allProofOpt.place(x=50, y=30)
+
+    myProofOpt = tk.Checkbutton(
+        containerRacesView, text="As minhas provas", variable=myProofs, onvalue=1, offvalue=0)
+    myProofOpt.place(x=50, y=60)
+
+    fiveKproofOpt = tk.Checkbutton(
+        containerRacesView, text="5K", variable=fiveKproofs, onvalue=1, offvalue=0)
+    fiveKproofOpt.place(x=50, y=90)
+
+    tenKproofOpt = tk.Checkbutton(
+        containerRacesView, text="10K", variable=tenKproofs, onvalue=1, offvalue=0)
+    tenKproofOpt.place(x=50, y=120)
+
+    twentyOneKproofOpt = tk.Checkbutton(
+        containerRacesView, text="21K", variable=twentyOneKproofs, onvalue=1, offvalue=0)
+    twentyOneKproofOpt.place(x=50, y=150)
+
+    trailProofOpt = tk.Checkbutton(
+        containerRacesView, text="Caminhada", variable=trailProofs, onvalue=1, offvalue=0)
+    trailProofOpt.place(x=50, y=180)
+
+    treeviewProofs = ttk.Treeview(containerRacesView, columns=(
+        "Prova", "Data", "Local", "Distância"), show="headings", height=13)
+    treeviewProofs.place(x=200, y=20)
+
+    treeviewProofs.heading("Prova", text="Prova")
+    treeviewProofs.heading("Data", text="Data")
+    treeviewProofs.heading("Local", text="Local")
+    treeviewProofs.heading("Distância", text="Distância")
+
+    treeviewProofs.column("Prova", width=200)
+    treeviewProofs.column("Data", width=140)
+    treeviewProofs.column("Local", width=200)
+    treeviewProofs.column("Distância", width=100)
+
+    # scrollbar vertical
+    scrollbar = tk.Scrollbar(containerRacesView, orient="vertical")
+    scrollbar.config(command=treeviewProofs.yview)
+
+    scrollbar.place(x=830, y=20, height=300)
+
+    allRaces = showAllRaces()
+
+    for i in allRaces:
+        treeviewProofs.insert("", tk.END, values=(
+            i["name"], i["date"], i["local"], i["distance"]))
+
+    searchImage.subsample(1, 1)
+    ascImage.subsample(1, 1)
+    descImage.subsample(1, 1)
+
+    btnSearch = tk.Button(containerRacesView, width=70, height=62,
+                          image=searchImage, compound="center", bd=0, cursor="hand2")
+    btnSearch.place(x=880, y=20)
+
+    btnAsc = tk.Button(containerRacesView, width=70, height=62,
+                       image=ascImage, compound="center", bd=0, cursor="hand2")
+    btnAsc.place(x=880, y=140)
+
+    btnDesc = tk.Button(containerRacesView, width=70, height=62,
+                        image=descImage, compound="center", bd=0, cursor="hand2")
+    btnDesc.place(x=880, y=260)
+
+    labelProofs = tk.Label(containerRacesView, text="Nº de provas:", font=( "Arial", 12))
+    labelProofs.place(x=160, y=360)
+
+    entryProofs = tk.Entry(containerRacesView, width=8, font=("Arial", 12))
+    entryProofs.place(x=270, y=360)
+
+
+    entryProofs.insert(0, CountProofs(countProofs, treeviewProofs))
+
+
+def CountProofs(countProofs, treeProofs):
+
+    # count the number of proofs in the treeview
+    for i in treeProofs.get_children():
+        countProofs += 1
+
+    return countProofs
 
 # ------------------------------------------------------------------------------------------------------------------------------------------
 btnLogin.config(command=loginView)
