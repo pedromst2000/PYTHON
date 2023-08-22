@@ -65,3 +65,25 @@ def filterProofs(distance):
     file.close()
 
     return filteredRaces
+
+
+def filterLoggedUserProofs(distance, loggedUser):
+
+    file = open("files/provas.txt", "r", encoding="utf-8")
+
+    lines = file.readlines()
+
+    filteredRaces = []
+
+    for line in lines:
+        if distance in line and loggedUser in line:
+            prova = line.split(";")[0]
+            date = line.split(";")[1]
+            local = line.split(";")[2]
+            distance = line.split(";")[3]
+            filteredRaces.append(
+                {"name": prova, "date": date, "local": local, "distance": distance})
+
+    file.close()
+
+    return filteredRaces

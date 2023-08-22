@@ -14,6 +14,7 @@ Window.geometry("1200x600")
 userIsLogged = False
 userLogged = ""
 passwordIsVisible = False
+countProof = 0
 selectedRace = StringVar()
 # for solving the bug of the image not showing
 deletedImage = tk.PhotoImage(file="images/remover.png")
@@ -485,9 +486,14 @@ def consultRacesView():
     global searchImage
     global ascImage
     global descImage
+    global userLogged
 
-    countProofs = 0
     allProofs.set(1)
+    myProofs.set(0)
+    fiveKproofs.set(0)
+    tenKproofs.set(0)
+    twentyOneKproofs.set(0)
+    trailProofs.set(0)
 
     containerRacesView = tk.Frame(Window, width=980, height=600)
     containerRacesView.place(x=220, y=100)
@@ -558,23 +564,248 @@ def consultRacesView():
                         image=descImage, compound="center", bd=0, cursor="hand2")
     btnDesc.place(x=880, y=260)
 
-    labelProofs = tk.Label(containerRacesView, text="Nº de provas:", font=( "Arial", 12))
+    labelProofs = tk.Label(
+        containerRacesView, text="Nº de provas:", font=("Arial", 12))
     labelProofs.place(x=160, y=360)
 
-    entryProofs = tk.Entry(containerRacesView, width=8, font=("Arial", 12))
+    entryProofs = tk.Entry(containerRacesView, width=8,
+                           font=("Arial", 12))
     entryProofs.place(x=270, y=360)
+    entryProofs.insert(0, len(allRaces))
+    entryProofs.config(state="readonly")
+
+    btnSearch.config(command=lambda: searchProof(entryProofs, treeviewProofs, allProofs,
+                     myProofs, fiveKproofs, tenKproofs, twentyOneKproofs, trailProofs))
+
+    btnAsc.config(command=lambda: ascSort(
+        treeviewProofs))
+
+    btnDesc.config(command=lambda: descSort(
+        treeviewProofs))
+
+    def searchProof(entryProofs, treeProofs, allOption, myOption, fiveKOption, tenKOption, twentyOneKOption, trailOption):
+
+        global countProof
+
+        if allOption.get() == 0 and myOption.get() == 0 and fiveKOption.get() == 0 and tenKOption.get() == 0 and twentyOneKOption.get() == 0 and trailOption.get() == 0:
+            return messagebox.showerror("Pesquisar Provas", "Selecione pelo menos uma opção!")
+
+        if allOption.get() == 1 and myOption.get() == 1:
+            if fiveKOption.get() == 1 or tenKOption.get() == 1 or twentyOneKOption.get() == 1 or trailOption.get() == 1 or allOption.get() == 1 or myOption.get() == 1:
+                return messagebox.showerror("Pesquisar Provas", "Pode apenas visualizar as suas provas ou todas!")
+
+        elif allOption.get() == 1 and myOption.get() == 0 and fiveKOption.get() == 0 and tenKOption.get() == 0 and twentyOneKOption.get() == 0 and trailOption.get() == 0:
+
+            allProofs_ = showAllRaces()
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in allProofs_:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(allProofs_)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 0 and myOption.get() == 1 and fiveKOption.get() == 0 and tenKOption.get() == 0 and twentyOneKOption.get() == 0 and trailOption.get() == 0:
+            treeProofs.delete(*treeProofs.get_children())
+
+            myProofs_ = displayRaces(userLogged)
+
+            for i in myProofs_:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(myProofs_)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 1 and myOption.get() == 0 and fiveKOption.get() == 1 and tenKOption.get() == 0 and twentyOneKOption.get() == 0 and trailOption.get() == 0:
+
+            fiveK = filterProofs("5K")
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in fiveK:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(fiveK)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 1 and myOption.get() == 0 and fiveKOption.get() == 0 and tenKOption.get() == 1 and twentyOneKOption.get() == 0 and trailOption.get() == 0:
+
+            tenK = filterProofs("10K")
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in tenK:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(tenK)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 1 and myOption.get() == 0 and fiveKOption.get() == 0 and tenKOption.get() == 0 and twentyOneKOption.get() == 1 and trailOption.get() == 0:
+
+            twentyOneK = filterProofs("21K")
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in twentyOneK:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(twentyOneK)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 1 and myOption.get() == 0 and fiveKOption.get() == 0 and tenKOption.get() == 0 and twentyOneKOption.get() == 0 and trailOption.get() == 1:
+
+            trails = filterProofs("Caminhada")
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in trails:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(trails)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 0 and myOption.get() == 1 and fiveKOption.get() == 1 and tenKOption.get() == 0 and twentyOneKOption.get() == 0 and trailOption.get() == 0:
+
+            MyfiveK = filterLoggedUserProofs("5K", userLogged)
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in MyfiveK:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(MyfiveK)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 0 and myOption.get() == 1 and fiveKOption.get() == 0 and tenKOption.get() == 1 and twentyOneKOption.get() == 0 and trailOption.get() == 0:
+
+            MytenK = filterLoggedUserProofs("10K", userLogged)
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in MytenK:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(MytenK)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 0 and myOption.get() == 1 and fiveKOption.get() == 0 and tenKOption.get() == 0 and twentyOneKOption.get() == 21 and trailOption.get() == 0:
+
+            MytwentyOneK = filterLoggedUserProofs("21K", userLogged)
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in MytwentyOneK:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(MytwentyOneK)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
+
+        elif allOption.get() == 0 and myOption.get() == 1 and fiveKOption.get() == 0 and tenKOption.get() == 0 and twentyOneKOption.get() == 0 and trailOption.get() == 1:
+
+            Mytrails = filterLoggedUserProofs("Caminhada", userLogged)
+
+            treeProofs.delete(*treeProofs.get_children())
+
+            for i in Mytrails:
+                treeProofs.insert("", tk.END, values=(
+                    i["name"], i["date"], i["local"], i["distance"]))
+
+            countProof = len(Mytrails)
+
+            entryProofs.config(state="normal")
+            entryProofs.delete(0, tk.END)
+            entryProofs.insert(0, countProof)
+            entryProofs.config(state="readonly")
 
 
-    entryProofs.insert(0, CountProofs(countProofs, treeviewProofs))
+def ascSort(treeviewProofs):
+
+    Proofs = []
+
+    for i in treeviewProofs.get_children():
+        Proofs.append(treeviewProofs.item(i)["values"])
 
 
-def CountProofs(countProofs, treeProofs):
+    # sort the list by the second element of the tuple
+    Proofs.sort(key=lambda x: x[0])
 
-    # count the number of proofs in the treeview
-    for i in treeProofs.get_children():
-        countProofs += 1
+    # delete the treeview
+    treeviewProofs.delete(*treeviewProofs.get_children())
 
-    return countProofs
+    # insert the sorted list
+    for i in Proofs:
+        treeviewProofs.insert("", tk.END, values=(
+            i[0], i[1], i[2], i[3]))
+        
+    
+        
+
+
+
+def descSort(treeviewProofs):
+
+    Proofs = []
+
+    for i in treeviewProofs.get_children():
+        Proofs.append(treeviewProofs.item(i)["values"])
+
+    # descending order by the first element of the tuple
+    Proofs.sort(key=lambda x: x[0], reverse=True)
+
+    # delete the treeview
+    treeviewProofs.delete(*treeviewProofs.get_children())
+
+    # insert the sorted list
+    for i in Proofs:
+        treeviewProofs.insert("", tk.END, values=(
+            i[0], i[1], i[2], i[3]))
+        
 
 # ------------------------------------------------------------------------------------------------------------------------------------------
 btnLogin.config(command=loginView)
