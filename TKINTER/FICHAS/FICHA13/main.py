@@ -74,13 +74,13 @@ btnConsultRaces.config(wraplength=90)
 imgbtnOpt3 = tk.PhotoImage(file="images/menuOpt3.png")
 imgbtnOpt3 = imgbtnOpt3.subsample(2, 2)
 
-btnManageUsers = tk.Button(containerMenuBackground, text="Sair App", width=170, height=92,
-                           image=imgbtnOpt3, compound="left", font=("Arial", 12, "bold"))
-btnManageUsers.place(x=20, y=350)
+btnExitApp = tk.Button(containerMenuBackground, text="Sair App", width=170, height=92,
+                       image=imgbtnOpt3, compound="left", font=("Arial", 12, "bold"))
+btnExitApp.place(x=20, y=350)
 
-btnManageUsers.config(anchor=tk.CENTER)
+btnExitApp.config(anchor=tk.CENTER)
 
-btnManageUsers.config(wraplength=90)
+btnExitApp.config(wraplength=90)
 
 # button 'Iniciar Sessão' on the top of the window
 btnLogin = tk.Button(Window, text="Iniciar Sessão",
@@ -771,7 +771,6 @@ def ascSort(treeviewProofs):
     for i in treeviewProofs.get_children():
         Proofs.append(treeviewProofs.item(i)["values"])
 
-
     # sort the list by the second element of the tuple
     Proofs.sort(key=lambda x: x[0])
 
@@ -782,10 +781,6 @@ def ascSort(treeviewProofs):
     for i in Proofs:
         treeviewProofs.insert("", tk.END, values=(
             i[0], i[1], i[2], i[3]))
-        
-    
-        
-
 
 
 def descSort(treeviewProofs):
@@ -805,12 +800,25 @@ def descSort(treeviewProofs):
     for i in Proofs:
         treeviewProofs.insert("", tk.END, values=(
             i[0], i[1], i[2], i[3]))
-        
+
+# ----------------------------------------------------------------------EXIT APP VIEW   -------------------------------------------------------
+
+
+def exitApp():
+    checkExit = messagebox.askyesno(
+        "Sair", "Tem a certeza que pretende sair da aplicação?")
+
+    if checkExit == True:
+        Window.destroy()
+
+    return False
+
 
 # ------------------------------------------------------------------------------------------------------------------------------------------
 btnLogin.config(command=loginView)
 btnCreateAccount.config(command=RegisterView)
 btnManageRaces.config(command=manageRacesOption)
 btnConsultRaces.config(command=consultRacesOption)
+btnExitApp.config(command=lambda: exitApp())
 
 Window.mainloop()
