@@ -1,4 +1,4 @@
-from classes.prova import prova
+from Classes.prova import prova
 
 # display the races of the logged in user
 

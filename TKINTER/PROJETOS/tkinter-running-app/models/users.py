@@ -1,4 +1,4 @@
-from classes.user import User
+from Classes.user import User
 
 def login(username, password):
     file = open("files/utilizadores.txt", "r", encoding="utf-8")

@@ -1,5 +1,6 @@
 import os
 
+
 class prova:
 
     # attributes
@@ -32,3 +33,5 @@ class prova:
         else:
             file.write(
                 f'\n{self.Prova};{self.Data};{self.Local};{self.Distance};{self.Creator}')
+
+        file.close()
