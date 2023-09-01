@@ -1,0 +1,10 @@
+Buenos Aires;Argentina;Chile;Brazil;Colombia;Argentina
+Bogota;Chile;Brazil;Colombia;Argentina;Colombia
+Brasilia;Mexico;Panama;Brazil;Colombia;Brazil
+Santiago;Argentina;Mexico;Panama;Brazil;Chile
+Quito;Argentina;Mexico;Panama;Ecuador;Ecuador
+Caracas;Venezuela;Mexico;Panama;Ecuador;Venezuela
+Montevideo;Paraguay;Venezuela;Mexico;Uruguay;Uruguay
+Asuncion;Brazil;Paraguay;Venezuela;Uruguay;Paraguay
+La Paz;Bolivia;Brazil;Paraguay;Venezuela;Bolivia
+Lima;Argentina;Chile;Peru;Bolivia;Peru

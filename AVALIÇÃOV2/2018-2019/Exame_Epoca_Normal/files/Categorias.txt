@@ -1,0 +1,6 @@
+Drama
+Comédia
+Thriller
+Animação
+Acção
+Terror
