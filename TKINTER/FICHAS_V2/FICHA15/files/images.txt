@@ -1,0 +1,4 @@
+C:/Users/User/Desktop/PYTHON/TKINTER/FICHAS_V2/FICHA15/images/passaro1.png
+C:/Users/User/Desktop/PYTHON/TKINTER/FICHAS_V2/FICHA15/images/passaro2.png
+C:/Users/User/Desktop/PYTHON/TKINTER/FICHAS_V2/FICHA15/images/passaro3.png
+C:/Users/User/Desktop/PYTHON/TKINTER/FICHAS_V2/FICHA15/images/passaro4.png

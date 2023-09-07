@@ -1,136 +1,199 @@
 import tkinter as tk
-from tkinter import filedialog
-
-# window
-window = tk.Tk()
-window.title('Gestor de Fotos')
-window.geometry('1000x500')
-
-# colocar uma listbox no canto superior esquerdo
-listbox = tk.Listbox(window, width=50, height=20)
-listbox.grid(row=0, column=0)
-listbox.place(x=10, y=10)
+from tkinter import filedialog, Listbox, Button
+from PIL import ImageTk, Image
 
 
-# colocar um botão 'Selecionar imagem' abaicxo da listbox com a mesma width
-btn = tk.Button(window, text='Selecionar imagem', width=42, height=2)
-#posicionar o botão abaixo da listbox
-btn.place(x=10, y=350)
+Window = tk.Tk()
+Window.title("Gestor de Fotos")
 
-# colocar um botão 'Remover imagem' abaixo do botão 'Selecionar imagem' com a mesma width
-btn2 = tk.Button(window, text='Remover imagem', width=42, height=2)
-#posicionar o botão abaixo do botão 'Selecionar imagem'
-btn2.place(x=10, y=400)
+Window.geometry("800x600")
+Window.resizable(False, False)
 
-# colocar um outro container ao lado da listbox com a mesma height
-container = tk.Frame(window, width=400, height=300, relief='sunken', borderwidth=5)
-container.grid(row=0, column=1)
-container.place(x=400, y=10)
+listPhotos = Listbox(Window, width=50 , height=20)
+listPhotos.place(x=10, y=10)
 
 
-# colocar um canvas dentro do container inferior com a mesma width e height
-canvas = tk.Canvas(container, width=350, height=260, relief='sunken', borderwidth=5)
-canvas.place(x=10, y=10)
+buttonSelectImage = Button(Window, text="Selecionar Imagem", width=42, height=2)
+buttonSelectImage.place(x=10, y=360)
 
-# colocar quatro botões abaixo container de navegação
-# botão com icone '<<' avança para a primeira imagem
-btn3 = tk.Button(window, text='<<', width=10, height=2, relief='raised', borderwidth=5)
-btn3.place(x=400, y=320)
+buttonDeleteImage = Button(Window, text="Remover Imagem", width=42, height=2)
+buttonDeleteImage.place(x=10, y=420)
 
-# botão com icone '<' avança para a imagem anterior
-btn4 = tk.Button(window, text='<', width=10, height=2, relief='raised', borderwidth=5)
-btn4.place(x=500, y=320)
+buttonSaveImage = Button(Window, text="Salvar Imagem", width=42, height=2)
+buttonSaveImage.place(x=10, y=480)
 
-# botão com icone '>' avança para a próxima imagem
-btn5 = tk.Button(window, text='>', width=10, height=2, relief='raised', borderwidth=5)
-btn5.place(x=600, y=320)
+containerCanvas = tk.Frame(Window, width=380, height=280, relief="sunken", bd=2)
+containerCanvas.place(x=380, y=10)
 
-# botão com icone '>>' avança para a última imagem
-btn6 = tk.Button(window, text='>>', width=10, height=2, relief='raised', borderwidth=5)
-btn6.place(x=700, y=320)
+containerImage = tk.Canvas(containerCanvas, width=340, height=240, relief="sunken", bd=2, bg="white")
+containerImage.place(x=10, y=10)
 
-def select_image():
-    # abre uma janela para selecionar uma imagem no caminho da pasta 'images'
-    path = filedialog.askopenfilename(initialdir='images')
-    # adiciona o caminho da imagem selecionada na listbox
-    listbox.insert(tk.END, path)
-    # adiciona a imagem selecionada no canvas
-    canvas.image = tk.PhotoImage(file=path)
-    canvas.create_image(0, 0, image=canvas.image, anchor='nw')
-    # imagem com mesmo tamanho do canvas
-    canvas.config(width=canvas.image.width(), height=canvas.image.height())
-    # centralizar a imagem no canvas
-    canvas.place(x=(350-canvas.image.width())/2, y=(260-canvas.image.height())/2)
-        
+# navigation section
+# <<
+btnNavFirstImage = Button(Window, text="<<", width=12, height=2)
+btnNavFirstImage.place(x=380, y=300)
+# <
+btnNavLastImage  = Button(Window, text="<", width=12, height=2)
+btnNavLastImage.place(x=480, y=300)
+# >
+btnNavPreviousImage = Button(Window, text=">", width=12, height=2)
+btnNavPreviousImage.place(x=580, y=300)
+# >>
+btnNavNextImage = Button(Window, text=">>", width=12, height=2)
+btnNavNextImage.place(x=680, y=300)
 
+def SelectImage():
 
-def view_image():
-    #percorre a listbox e mostra a imagem selecionada
-    for i in listbox.curselection():
-        # adiciona a imagem selecionada no canvas
-        canvas.image = tk.PhotoImage(file=listbox.get(i))
-        canvas.create_image(0, 0, image=canvas.image, anchor='nw')
-        # imagem com mesmo tamanho do canvas
-        canvas.config(width=canvas.image.width(), height=canvas.image.height())
-        # centralizar a imagem no canvas
-        canvas.place(x=(350-canvas.image.width())/2, y=(260-canvas.image.height())/2)
-    # se não houver imagem selecionada, mostra canvas vazio        
-    if len(listbox.curselection()) == 0:
-        canvas.image = tk.PhotoImage(file='')
-        canvas.create_image(0, 0, image=canvas.image, anchor='nw')
-        # imagem com mesmo tamanho do canvas
-        canvas.config(width=canvas.image.width(), height=canvas.image.height())
-        # centralizar a imagem no canvas
-        canvas.place(x=(350-canvas.image.width())/2, y=(260-canvas.image.height())/2)
+    filename = filedialog.askopenfilename(initialdir="./images", title="Select a File", filetypes=(("png files", "*.png"), ("gif files", "*.gif*")))
+
+    # get the selected image 
+    image = Image.open(filename)
+
+    # insert image to listbox
+    listPhotos.insert(tk.END, filename)
 
 
-def remove_image():
-    # remove a imagem selecionada na listbox
-    listbox.delete(tk.ANCHOR)
+def showImage():
+    # get the selected image 
+    image = Image.open(listPhotos.get(listPhotos.curselection()))
+
+    # resize image
+    image = image.resize((346, 246))
+
+    # insert image to canvas
+    containerImage.image = ImageTk.PhotoImage(image)
+    containerImage.create_image(0, 0, image=containerImage.image, anchor="nw")
+
+def saveImage():
+    # get the selected image
+    image = Image.open(listPhotos.get(listPhotos.curselection()))
+
+    file = open("files/images.txt", "r", encoding="utf-8")
+
+    lines = file.readlines()
+
+    file.close()
+
+    file = open("files/images.txt", "a", encoding="utf-8")
+
+    for line in lines:
+        # get the image name
+        imageName = line.split("/")[2].split(".")[0]
+
+        # get the selected image name
+        selectedImageName = listPhotos.get(listPhotos.curselection()).split("/")[2].split(".")[0]
+
+        if imageName != selectedImageName:
+            file.write(line)
+
+    file.write(listPhotos.get(listPhotos.curselection()) + "\n")
 
 
-def navigate_first():
-    # navega para a primeira imagem
-    listbox.selection_clear(0, tk.END)
-    listbox.selection_set(0)
-    view_image()
+def showImages():
+    file = open("files/images.txt", "r", encoding="utf-8")
+
+    lines = file.readlines()
+   
+    for line in lines:
+        # insert without \n
+        listPhotos.insert(tk.END, line[:-1])
 
 
-def navigate_previous():
-    # navega para a imagem anterior
-    if len(listbox.curselection()) > 0:
-        listbox.selection_clear(0, tk.END)
-        listbox.selection_set(listbox.curselection()[0]-1)
-        view_image()
-
-def navigate_next():
-    # navega para a próxima imagem
-    if len(listbox.curselection()) > 0:
-        listbox.selection_clear(0, tk.END)
-        listbox.selection_set(listbox.curselection()[0]+1)
-        view_image()
+    file.close() 
 
 
-def navigate_last():
-    # navega para a última imagem
-    listbox.selection_clear(0, tk.END)
-    listbox.selection_set(tk.END)
-    view_image()
+def navigationImages():
+
+    images = []
+
+    file = open("files/images.txt", "r", encoding="utf-8")
+
+    lines = file.readlines()
+
+    for line in lines:
+
+        images.append(line[:-1])
+
+    file.close()
+
+    return images
 
 
-# associar o botão 'Selecionar imagem' com a função select_image
-btn.config(command=select_image)
-# associar o botão 'Remover imagem' com a função remove_image
-btn2.config(command=remove_image)
-# associar a função view_image ao evento de selecionar uma imagem na listbox
-listbox.bind('<<ListboxSelect>>', lambda x: view_image())
-# associar a função navigate_first ao botão '<<'
-btn3.config(command=navigate_first)
-# associar a função navigate_previous ao botão '<'
-btn4.config(command=navigate_previous)
-# associar a função navigate_next ao botão '>'
-btn5.config(command=navigate_next)
-# associar a função navigate_last ao botão '>>'
-btn6.config(command=navigate_last)
+def firstImage():
+    images = navigationImages()
 
-window.mainloop()
+    image = Image.open(images[0])
+
+    # resize image
+    image = image.resize((346, 246))
+
+    # insert image to canvas
+    containerImage.image = ImageTk.PhotoImage(image)
+    containerImage.create_image(0, 0, image=containerImage.image, anchor="nw") 
+
+    # navigate listbox
+    listPhotos.selection_clear(0, tk.END)
+    listPhotos.selection_set(0)
+
+
+def lastImage():
+    images = navigationImages()
+
+    image = Image.open(images[-1])
+
+    # resize image
+    image = image.resize((346, 246))
+
+    # insert image to canvas
+    containerImage.image = ImageTk.PhotoImage(image)
+    containerImage.create_image(0, 0, image=containerImage.image, anchor="nw")
+
+    # navigate listbox
+    listPhotos.selection_clear(0, tk.END)
+    listPhotos.selection_set(len(images) - 1)
+
+def previousImage():
+    images = navigationImages()
+
+    image = Image.open(images[listPhotos.curselection()[0] - 1])
+
+    # resize image
+    image = image.resize((346, 246))
+
+    # insert image to canvas
+    containerImage.image = ImageTk.PhotoImage(image)
+    containerImage.create_image(0, 0, image=containerImage.image, anchor="nw")
+
+    # navigate listbox
+    listPhotos.selection_clear(0, tk.END)
+    listPhotos.select_set(images.index(images[listPhotos.curselection()[0] - 1]))
+
+
+def nextImage():
+    images = navigationImages()
+
+    image = Image.open(images[listPhotos.curselection()[0] + 1])
+
+    # resize image
+    image = image.resize((346, 246))
+
+    # insert image to canvas
+    containerImage.image = ImageTk.PhotoImage(image)
+    containerImage.create_image(0, 0, image=containerImage.image, anchor="nw")
+
+    # navigate listbox
+    listPhotos.selection_clear(0, tk.END)
+    listPhotos.select_set(images.index(images[listPhotos.curselection()[0] + 1]))
+
+
+
+navigationImages()
+buttonSelectImage.config(command=SelectImage)
+buttonSaveImage.config(command=saveImage)
+listPhotos.bind("<<ListboxSelect>>", lambda x: showImage())
+showImages()
+btnNavFirstImage.config(command=firstImage)
+btnNavLastImage.config(command=lastImage)
+btnNavPreviousImage.config(command=previousImage)
+btnNavNextImage.config(command=nextImage)
+Window.mainloop()
