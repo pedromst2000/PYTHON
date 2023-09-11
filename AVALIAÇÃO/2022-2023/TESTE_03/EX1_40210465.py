@@ -182,5 +182,4 @@ def consultar():
 #  associar a função consultar() ao botão 'Consultar'
 button.config(command=consultar)
 
-
 window.mainloop()
