@@ -1,0 +1,8 @@
+#nome;data;tipo_emprestimo;descricao_emprestimo;estado
+Nome Amigo_1;01-10-2023;0;Óculos;0
+Nome Amigo_2;21-11-2023;1;100 euros;0
+Nome Amigo_3;01-12-2023;0;50 euros;0
+Nome Amigo_2;02-12-2023;1;100 euros;1
+Nome Amigo_1;03-12-2023;1;Disco;1
+Nome Amigo_3;03-12-2023;0;50 euros;0
+Pedro;12-01-2023;1;XBOX;1
