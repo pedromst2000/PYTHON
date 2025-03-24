@@ -1,6 +1,6 @@
 # Python
 
-### Pratical exercises and projects to help for the `Algorithms and Data Structures` degree of the TSIW course of ESMAD.
+### Pratical exercises and projects developed and to support for the `Algorithms and Data Structures` degree of the [TSIW](https://www.esmad.ipp.pt/courses/degree/663) course of [ESMAD](https://www.esmad.ipp.pt/?set_language=en).
 
 Evaluation of Algorithms and Data Structures :
 * Discipline - 19
